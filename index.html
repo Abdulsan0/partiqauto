@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PartiqAuto — Get a Quote with Best Price</title>
+<meta name="description" content="Find the exact auto parts you need. OEM & aftermarket. Shipping across the US. Get the Best quote from Our Specialist." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --bg:          #0c0d0f;
+  --bg2:         #111316;
+  --bg3:         #161820;
+  --card:        #13151a;
+  --border:      rgba(255,255,255,0.07);
+  --border-hi:   rgba(255,255,255,0.13);
+  --text:        #ecedf0;
+  --muted:       #7a7d8a;
+  --faint:       #3a3d4a;
+  --orange:      #f05a1a;
+  --orange-dim:  rgba(240,90,26,0.15);
+  --orange-hi:   #ff6b2b;
+  --amber:       #e8a020;
+  --green:       #22c55e;
+  --font-head:   'Syne', sans-serif;
+  --font-body:   'Inter', sans-serif;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ── NOISE TEXTURE OVERLAY ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(12,13,15,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 5%;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 58px;
+}
+.nav-logo {
+  font-family: var(--font-head);
+  font-size: 20px; font-weight: 700;
+  letter-spacing: -0.02em; color: var(--text);
+  text-decoration: none; display: flex; align-items: center; gap: 2px;
+}
+.nav-logo-icon {
+  width: 28px; height: 28px; background: var(--orange);
+  border-radius: 6px; display: flex; align-items: center; justify-content: center;
+  font-size: 14px; margin-right: 8px;
+}
+.nav-logo span { color: var(--orange); }
+.nav-links { display: flex; gap: 1.75rem; list-style: none; }
+.nav-links a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 500; transition: color 0.2s; letter-spacing: 0.01em; }
+.nav-links a:hover { color: var(--text); }
+.nav-cta {
+  background: var(--orange); color: #fff; border: none;
+  padding: 8px 18px; border-radius: 8px;
+  font-family: var(--font-body); font-size: 13px; font-weight: 600;
+  cursor: pointer; text-decoration: none;
+  transition: background 0.2s, transform 0.1s;
+  letter-spacing: 0.01em;
+}
+.nav-cta:hover { background: var(--orange-hi); transform: translateY(-1px); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 0;
+  padding-top: 58px;
+  position: relative;
+}
+
+/* ambient glow */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 10%; left: -10%;
+  width: 60%; height: 70%;
+  background: radial-gradient(ellipse, rgba(240,90,26,0.07) 0%, transparent 65%);
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0; right: 380px;
+  width: 50%; height: 50%;
+  background: radial-gradient(ellipse, rgba(232,160,32,0.04) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+/* HERO LEFT */
+.hero-left {
+  padding: 5rem 4rem 5rem 6%;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative; z-index: 1;
+}
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--orange-dim);
+  border: 1px solid rgba(240,90,26,0.3);
+  border-radius: 100px; padding: 5px 14px 5px 8px;
+  margin-bottom: 2rem; width: fit-content;
+}
+.hero-badge-dot {
+  width: 20px; height: 20px; background: var(--orange);
+  border-radius: 50%; display: flex; align-items: center;
+  justify-content: center; font-size: 10px; flex-shrink: 0;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(240,90,26,0.4); }
+  50% { box-shadow: 0 0 0 6px rgba(240,90,26,0); }
+}
+.hero-badge span { font-size: 12px; font-weight: 600; color: var(--orange); letter-spacing: 0.04em; }
+
+.hero-title {
+  font-family: var(--font-head);
+  font-size: clamp(44px, 5.5vw, 72px);
+  font-weight: 800;
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  margin-bottom: 1.5rem;
+  color: var(--text);
+}
+.hero-title .hl {
+  background: linear-gradient(135deg, var(--orange) 0%, var(--amber) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-title .dim { color: var(--faint); display: block; }
+
+.hero-sub {
+  font-size: 16px; color: var(--muted);
+  max-width: 480px; line-height: 1.75;
+  margin-bottom: 2.5rem;
+}
+
+.trust-grid {
+  display: flex; flex-direction: column; gap: 10px;
+  margin-bottom: 3rem;
+}
+.trust-item {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 14px; color: var(--muted);
+}
+.trust-check {
+  width: 20px; height: 20px; border-radius: 6px;
+  background: rgba(34,197,94,0.12);
+  border: 1px solid rgba(34,197,94,0.25);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; font-size: 11px; color: var(--green);
+}
+.trust-item strong { color: var(--text); font-weight: 600; }
+
+/* HERO STATS */
+.hero-stats {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border); border-radius: 12px;
+  overflow: hidden; max-width: 480px;
+}
+.hstat {
+  background: var(--bg2); padding: 14px 12px; text-align: center;
+}
+.hstat-n {
+  font-family: var(--font-head);
+  font-size: 22px; font-weight: 700;
+  color: var(--orange); line-height: 1; margin-bottom: 3px;
+}
+.hstat-l { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; }
+
+/* HERO RIGHT — FORM */
+.hero-right {
+  background: var(--card);
+  border-left: 1px solid var(--border);
+  padding: 2.5rem 2rem;
+  display: flex; flex-direction: column; justify-content: center;
+  overflow-y: auto; position: relative; z-index: 1;
+}
+
+/* orange top accent line */
+.hero-right::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--orange), var(--amber), transparent);
+}
+
+.form-head { margin-bottom: 1.5rem; }
+.form-head h2 {
+  font-family: var(--font-head);
+  font-size: 20px; font-weight: 700;
+  letter-spacing: -0.02em; margin-bottom: 4px;
+}
+.form-head p { font-size: 12px; color: var(--muted); }
+
+.section-divider {
+  font-size: 10px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--faint); margin: 14px 0 10px;
+  display: flex; align-items: center; gap: 8px;
+}
+.section-divider::after {
+  content: ''; flex: 1; height: 1px; background: var(--border);
+}
+
+.field { margin-bottom: 10px; }
+.field label {
+  display: block; font-size: 11px; font-weight: 600;
+  color: var(--muted); text-transform: uppercase;
+  letter-spacing: 0.07em; margin-bottom: 5px;
+}
+.field input, .field select, .field textarea {
+  width: 100%;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  color: var(--text); border-radius: 8px;
+  padding: 9px 12px;
+  font-family: var(--font-body); font-size: 13px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none; -webkit-appearance: none;
+}
+.field select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%237a7d8a' d='M5 6L0 0h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 10px center;
+  padding-right: 28px; cursor: pointer;
+}
+.field input:focus, .field select:focus, .field textarea:focus {
+  border-color: var(--orange);
+  box-shadow: 0 0 0 3px rgba(240,90,26,0.12);
+  background: rgba(240,90,26,0.03);
+}
+.field textarea { resize: none; height: 64px; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+.submit-btn {
+  width: 100%; margin-top: 14px;
+  background: linear-gradient(135deg, var(--orange) 0%, #d94a0e 100%);
+  color: #fff; border: none; padding: 13px;
+  border-radius: 10px;
+  font-family: var(--font-body); font-size: 14px; font-weight: 600;
+  cursor: pointer; letter-spacing: 0.01em;
+  transition: opacity 0.2s, transform 0.1s;
+  position: relative; overflow: hidden;
+}
+.submit-btn::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 60%);
+  pointer-events: none;
+}
+.submit-btn:hover { opacity: 0.92; transform: translateY(-1px); }
+.submit-btn:active { transform: scale(0.99); }
+.submit-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+.form-disclaimer { font-size: 10px; color: var(--faint); text-align: center; margin-top: 10px; }
+
+/* SUCCESS */
+.form-success { display: none; text-align: center; padding: 2.5rem 1rem; }
+.success-ring {
+  width: 60px; height: 60px; border-radius: 50%;
+  border: 2px solid var(--green);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 1.25rem; font-size: 24px; color: var(--green);
+  background: rgba(34,197,94,0.08);
+}
+.form-success h3 {
+  font-family: var(--font-head); font-size: 20px; font-weight: 700;
+  margin-bottom: 8px; letter-spacing: -0.02em;
+}
+.form-success p { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+/* ── TICKER BAR ── */
+.ticker-bar {
+  background: var(--orange);
+  padding: 10px 5%;
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  text-align: center; gap: 1px;
+}
+.tick-item { padding: 4px; }
+.tick-n {
+  font-family: var(--font-head);
+  font-size: 26px; font-weight: 800; color: #fff; line-height: 1;
+}
+.tick-l { font-size: 10px; color: rgba(255,255,255,0.65); text-transform: uppercase; letter-spacing: 0.07em; margin-top: 2px; }
+
+/* ── SECTIONS ── */
+.section { padding: 5rem 6%; position: relative; }
+.section-eyebrow {
+  font-size: 11px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.12em; color: var(--orange); margin-bottom: 8px;
+}
+.section-title {
+  font-family: var(--font-head);
+  font-size: clamp(28px, 3.5vw, 44px);
+  font-weight: 700; letter-spacing: -0.02em; line-height: 1.1;
+  margin-bottom: 2.5rem;
+}
+.section-title span { color: var(--faint); }
+
+/* PARTS */
+.parts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+.part-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 12px; padding: 1.25rem 1rem;
+  text-align: center; text-decoration: none; color: var(--text);
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  position: relative; overflow: hidden;
+}
+.part-card::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(240,90,26,0.05) 0%, transparent 60%);
+  opacity: 0; transition: opacity 0.2s;
+}
+.part-card:hover { border-color: var(--orange); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(240,90,26,0.12); }
+.part-card:hover::before { opacity: 1; }
+.part-icon { font-size: 28px; margin-bottom: 8px; display: block; }
+.part-name { font-family: var(--font-head); font-size: 14px; font-weight: 600; }
+
+/* HOW IT WORKS */
+.hiw-section {
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 5rem 6%;
+}
+.steps-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem; margin-top: 1rem;
+}
+.step-item {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 1.75rem 1.5rem;
+  position: relative; overflow: hidden;
+}
+.step-item::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--orange), transparent);
+}
+.step-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; border-radius: 10px;
+  background: var(--orange-dim); border: 1px solid rgba(240,90,26,0.25);
+  font-family: var(--font-head); font-size: 16px; font-weight: 700;
+  color: var(--orange); margin-bottom: 1rem;
+}
+.step-title { font-family: var(--font-head); font-size: 16px; font-weight: 600; margin-bottom: 8px; letter-spacing: -0.01em; }
+.step-desc { font-size: 13px; color: var(--muted); line-height: 1.65; }
+
+/* TESTIMONIALS */
+.testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.testi-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 1.5rem;
+  transition: border-color 0.2s;
+}
+.testi-card:hover { border-color: var(--border-hi); }
+.stars { color: var(--amber); font-size: 13px; letter-spacing: 2px; margin-bottom: 12px; }
+.testi-text { font-size: 13px; line-height: 1.7; color: var(--muted); margin-bottom: 16px; }
+.testi-author { display: flex; align-items: center; gap: 10px; }
+.testi-avatar {
+  width: 36px; height: 36px; border-radius: 10px;
+  background: var(--orange-dim); border: 1px solid rgba(240,90,26,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-head); font-size: 12px; font-weight: 700;
+  color: var(--orange); flex-shrink: 0;
+}
+.testi-name { font-size: 13px; font-weight: 600; }
+.testi-role { font-size: 11px; color: var(--muted); }
+
+/* CTA */
+.cta-section {
+  padding: 6rem 6%; text-align: center;
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  position: relative; overflow: hidden;
+}
+.cta-section::before {
+  content: '';
+  position: absolute; top: -40%; left: 50%; transform: translateX(-50%);
+  width: 600px; height: 400px;
+  background: radial-gradient(ellipse, rgba(240,90,26,0.1) 0%, transparent 65%);
+  pointer-events: none;
+}
+.cta-section .section-title { margin-bottom: 1rem; }
+.cta-section p { font-size: 16px; color: var(--muted); max-width: 500px; margin: 0 auto 2.5rem; line-height: 1.7; }
+.btn-primary {
+  display: inline-block; text-decoration: none;
+  background: linear-gradient(135deg, var(--orange) 0%, #d94a0e 100%);
+  color: #fff; padding: 14px 32px; border-radius: 10px;
+  font-size: 15px; font-weight: 600;
+  transition: opacity 0.2s, transform 0.15s;
+  border: none; cursor: pointer;
+}
+.btn-primary:hover { opacity: 0.9; transform: translateY(-2px); }
+
+/* FOOTER */
+footer {
+  background: var(--bg); border-top: 1px solid var(--border);
+  padding: 3rem 6% 2rem;
+}
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 2.5rem; }
+.footer-logo {
+  font-family: var(--font-head); font-size: 20px; font-weight: 700;
+  letter-spacing: -0.02em; margin-bottom: 10px; color: var(--text);
+  display: flex; align-items: center; gap: 6px;
+}
+.footer-logo-icon {
+  width: 24px; height: 24px; background: var(--orange); border-radius: 6px;
+  display: flex; align-items: center; justify-content: center; font-size: 12px;
+}
+.footer-logo span { color: var(--orange); }
+.footer-desc { font-size: 13px; color: var(--muted); line-height: 1.7; max-width: 260px; }
+.footer-col h4 { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); margin-bottom: 12px; }
+.footer-col ul { list-style: none; }
+.footer-col li { margin-bottom: 8px; }
+.footer-col a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+.footer-col a:hover { color: var(--text); }
+.footer-bottom {
+  border-top: 1px solid var(--border); padding-top: 1.5rem;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 1rem;
+}
+.footer-copy { font-size: 12px; color: var(--muted); }
+.footer-copy a { color: var(--muted); text-decoration: none; }
+.footer-badges { display: flex; gap: 8px; }
+.badge-item {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 6px; padding: 4px 10px;
+  font-size: 10px; color: var(--muted); font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+
+/* MOBILE */
+.mobile-cta {
+  display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 99;
+  background: var(--orange); padding: 14px 5%;
+  text-align: center; font-size: 14px; font-weight: 600;
+  color: #fff; text-decoration: none;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 960px) {
+  .hero { grid-template-columns: 1fr; }
+  .hero-left { padding: 3rem 5% 2rem; border-right: none; border-bottom: 1px solid var(--border); }
+  .hero-right { padding: 2rem 5%; }
+  .hero-stats { max-width: 100%; }
+  .steps-grid { grid-template-columns: 1fr; }
+  .testimonials-grid { grid-template-columns: 1fr; }
+  .ticker-bar { grid-template-columns: repeat(2, 1fr); }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .nav-links { display: none; }
+  .mobile-cta { display: block; }
+  body { padding-bottom: 58px; }
+}
+@media (max-width: 600px) {
+  .hero-title { font-size: 36px; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .hero-stats { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* FADE IN ANIMATION */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero-badge  { animation: fadeUp 0.5s 0.0s both; }
+.hero-title  { animation: fadeUp 0.5s 0.1s both; }
+.hero-sub    { animation: fadeUp 0.5s 0.2s both; }
+.trust-grid  { animation: fadeUp 0.5s 0.25s both; }
+.hero-stats  { animation: fadeUp 0.5s 0.3s both; }
+.hero-right  { animation: fadeUp 0.5s 0.15s both; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-icon">⚙</div>
+    Partiq<span>Auto</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#parts">Parts</a></li>
+    <li><a href="#how-it-works">How it works</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:0.5rem;">
+    <!-- <a href="tel:18005550199" class="nav-phone">&#9990; 1-800-555-0199</a> -->
+    <a href="#quote-form" class="nav-cta">Get a quote</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+
+  <!-- LEFT -->
+  <div class="hero-left">
+    <div class="hero-badge">
+      <div class="hero-badge-dot">⚡</div>
+      <span>Over 2 million parts in stock</span>
+    </div>
+    <h1 class="hero-title">
+      The right part.<br>
+      <!-- <span class="hl">Right now.</span> -->
+      <span class="dim">Guaranteed.</span>
+    </h1>
+    <p class="hero-sub">OEM and aftermarket auto parts for every make and model. Get a free, no-obligation quote with Best Deal.</p>
+    <div class="trust-grid">
+      <div class="trust-item">
+        <div class="trust-check">✓</div>
+        <span><strong>Standard shipping</strong> on orders $75+</span>
+      </div>
+      <div class="trust-item">
+        <div class="trust-check">✓</div>
+        <span><strong>Standard warranty</strong> on select parts</span>
+      </div>
+      <!-- <div class="trust-item">
+        <div class="trust-check">✓</div>
+        <span><strong>Same-day dispatch</strong> before 3pm</span>
+      </div> -->
+    </div>
+    <div class="hero-stats">
+      <div class="hstat">
+        <div class="hstat-n" data-target="2000000">0</div>
+        <div class="hstat-l">Parts</div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-n" data-target="48000">0</div>
+        <div class="hstat-l">Customers</div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-n">98%</div>
+        <div class="hstat-l">Accuracy</div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-n">4.9★</div>
+        <div class="hstat-l">Rating</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT — FORM -->
+  <div class="hero-right" id="quote-form">
+    <div class="form-head">
+      <h2>Get your free quote</h2>
+      <p>Takes less than 60 seconds — no credit card needed</p>
+    </div>
+
+    <div id="form-fields">
+      <div class="section-divider">Vehicle details</div>
+      <div class="field-row">
+        <div class="field">
+          <label>Year</label>
+          <select id="f-year">
+            <option value="">Year</option>
+            <script>for(let y=2025;y>=1980;y--) document.write(`<option>${y}</option>`);</script>
+          </select>
+        </div>
+        <div class="field">
+          <label>Make</label>
+          <select id="f-make">
+            <option value="">Make</option>
+            <option>Ford</option><option>Chevrolet</option><option>Toyota</option>
+            <option>Honda</option><option>Dodge</option><option>BMW</option>
+            <option>Mercedes-Benz</option><option>Nissan</option><option>Jeep</option>
+            <option>GMC</option><option>Ram</option><option>Hyundai</option>
+            <option>Kia</option><option>Volkswagen</option><option>Subaru</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label>Model</label>
+        <input type="text" id="f-model" placeholder="e.g. F-150, Camry, Civic..." />
+      </div>
+      <div class="field">
+        <label>Part needed</label>
+        <select id="f-part">
+          <option value="">Select category</option>
+          <option>Engine parts</option>
+          <option>Transmission</option>
+          <!-- <option>Brakes & rotors</option>
+          <option>Suspension & steering</option>
+          <option>Exhaust system</option>
+          <option>Electrical</option>
+          <option>Filters & fluids</option>
+          <option>Wheels & tires</option>
+          <option>Body & trim</option>
+          <option>Lighting</option>
+          <option>Other — I'll describe it</option>-->
+        </select>
+      </div>
+      <div class="field">
+        <label>Part # / VIN (optional)</label>
+        <input type="text" id="f-vin" placeholder="OEM part # or 17-digit VIN" />
+      </div>
+      <div class="field">
+        <label>Additional details</label>
+        <textarea id="f-notes" placeholder="Describe the issue, OEM vs aftermarket preference, quantity, etc."></textarea>
+      </div>
+
+      <div class="section-divider">Contact info</div>
+      <div class="field-row">
+        <div class="field">
+          <label>First name</label>
+          <input type="text" id="f-fname" placeholder="John" />
+        </div>
+        <div class="field">
+          <label>Last name</label>
+          <input type="text" id="f-lname" placeholder="Smith" />
+        </div>
+      </div>
+      <div class="field">
+        <label>Email address</label>
+        <input type="email" id="f-email" placeholder="john@example.com" />
+      </div>
+      <div class="field">
+        <label>Phone number</label>
+        <input type="tel" id="f-phone" placeholder="(555) 000-0000" />
+      </div>
+      <!-- <div class="field">
+        <label>How urgent is this?</label>
+        <select id="f-urgency">
+          <option>ASAP — I need it today</option>
+          <option>Within a few days</option>
+          <option>This week</option>
+          <option>No rush, just pricing</option>
+        </select>
+      </div>-->
+
+      <button class="submit-btn" onclick="submitForm()">&#9889; Get my free quote now</button>
+    </div>
+
+    <!-- SUCCESS -->
+    <div class="form-success" id="form-success">
+      <div class="success-ring">&#10003;</div>
+      <h3>Quote request received!</h3>
+      <p>A parts specialist will contact you within <strong style="color:var(--orange)">15 minutes</strong> during business hours.</p>
+      <p style="margin-top:8px;">Check your email for a confirmation.</p>
+    </div>
+
+    <p class="form-disclaimer">&#128274; Your info is 100% secure. We never sell your data.</p>
+  </div>
+
+</section>
+
+<!-- TICKER BAR -->
+<div class="ticker-bar">
+  <div class="tick-item">
+    <div class="tick-n">2M+</div>
+    <div class="tick-l">Parts in stock</div>
+  </div>
+  <div class="tick-item">
+    <div class="tick-n">48K+</div>
+    <div class="tick-l">Happy customers</div>
+  </div>
+  <div class="tick-item">
+    <div class="tick-n">98%</div>
+    <div class="tick-l">Order accuracy</div>
+  </div>
+  <div class="tick-item">
+    <div class="tick-n">4.9★</div>
+    <div class="tick-l">Average rating</div>
+  </div>
+</div>
+
+<!-- PARTS CATEGORIES -->
+<section class="section" id="parts">
+  <div class="section-eyebrow">Browse by category</div>
+  <h2 class="section-title">Find your <span>part fast</span></h2>
+  <div class="parts-grid">
+    <!-- <a href="#quote-form" class="part-card"><span class="part-icon">&#128260;</span><div class="part-name">Brakes</div></a> -->
+    <a href="#quote-form" class="part-card"><span class="part-icon">&#9881;</span><div class="part-name">Engine</div></a>
+    <a href="#quote-form" class="part-card"><span class="part-icon">&#128260;</span><div class="part-name">Transmission</div></a>
+    <!-- <a href="#quote-form" class="part-card"><span class="part-icon">&#128101;</span><div class="part-name">Suspension</div></a>
+    <a href="#quote-form" class="part-card"><span class="part-icon">&#128293;</span><div class="part-name">Exhaust</div></a>
+    <a href="#quote-form" class="part-card"><span class="part-icon">&#9889;</span><div class="part-name">Electrical</div></a>
+    <a href="#quote-form" class="part-card"><span class="part-icon">&#128161;</span><div class="part-name">Lighting</div></a>
+    <a href="#quote-form" class="part-card"><span class="part-icon">&#128295;</span><div class="part-name">Filters & fluids</div></a> -->
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="hiw-section" id="how-it-works">
+  <div class="section-eyebrow">Simple process</div>
+  <h2 class="section-title">Parts in 2 <span>easy steps</span></h2>
+  <div class="steps-grid">
+    <div class="step-item">
+      <div class="step-num">1</div>
+      <div class="step-title">Submit your quote</div>
+      <p class="step-desc">Tell us your vehicle details and the part you need. Takes less than 60 seconds using our smart form above.</p>
+    </div>
+    <div class="step-item">
+      <div class="step-num">2</div>
+      <div class="step-title">Get the Best Deal</div>
+      <p class="step-desc">A parts specialist contacts you with the best price and availability for OEM or aftermarket options.</p>
+    </div>
+    <div class="step-item">
+      <div class="step-num">3</div>
+      <div class="step-title">Standard delivery</div>
+      <!--<p class="step-desc">Approve the quote and your part ships same day (orders before 3 PM). Track it in real time right to your door.</p>-->
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section" id="reviews">
+  <div class="section-eyebrow">Customer reviews</div>
+  <h2 class="section-title">Mechanics <span>&amp; drivers trust us</span></h2>
+  <div class="testimonials-grid">
+    <div class="testi-card">
+      <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <p class="testi-text">Got my rotors and pads for my F-150 delivered next day. Price was $40 cheaper than the dealer and the quality is just as good. Will definitely order again.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">MR</div>
+        <div><div class="testi-name">Mike R.</div><div class="testi-role">DIY mechanic, Texas</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <p class="testi-text">I run a repair shop and these guys save me hours every week. I get quotes back in minutes and the parts always arrive on time. My go-to supplier now.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">SL</div>
+        <div><div class="testi-name">Sarah L.</div><div class="testi-role">Shop owner, Ohio</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <p class="testi-text">Found a rare sensor for my '98 Civic that no one else had in stock. Shipped in 2 days. Customer service was incredibly helpful throughout. 10/10.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">DK</div>
+        <div><div class="testi-name">Danny K.</div><div class="testi-role">Classic car restorer, California</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BRANDS
+<div class="brands-section">
+  <p class="brands-label">Trusted brands we carry</p>
+  <div class="brands-row">
+    <span class="brand-name">Bosch</span>
+    <span class="brand-name">ACDelco</span>
+    <span class="brand-name">Dorman</span>
+    <span class="brand-name">Monroe</span>
+    <span class="brand-name">Gates</span>
+    <span class="brand-name">Moog</span>
+    <span class="brand-name">Denso</span>
+    <span class="brand-name">NGK</span>
+    <span class="brand-name">Fel-Pro</span>
+    <span class="brand-name">Brembo</span>
+  </div>
+</div>
+-->
+
+<!-- BOTTOM CTA -->
+<section class="cta-section" id="contact">
+  <div class="section-eyebrow">Ready to get started?</div>
+  <h2 class="section-title">Get your part<br><span>At Best Price</span></h2>
+  <p>No pressure, no commitment. Just the best price on the part you need</p>
+  <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+    <a href="#quote-form" class="btn-primary">&#9889; Get a free quote</a>
+    <!-- <a href="tel:18005550199" class="btn-secondary">&#9990; Call 1-800-555-0199</a> -->
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">
+        <div class="footer-logo-icon">⚙</div>
+        Partiq<span>Auto</span>
+      </div>
+      <p class="footer-desc">Your trusted source for OEM and aftermarket auto parts. Serving mechanics, shops, and car owners across the US.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Parts</h4>
+      <ul>
+        <!-- <li><a href="#">Brakes &amp; rotors</a></li>
+        <li><a href="#">Suspension</a></li>
+        <li><a href="#">Electrical</a></li>
+        <li><a href="#">Exhaust</a></li>-->
+        <li><a href="#">Engine</a></li>
+        <li><a href="#">Transmission</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <!-- Company column hidden -->
+    </div>
+    <div class="footer-col">
+      <!-- Support column hidden -->
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">&copy; 2026 PartiqAuto. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms</a></span>
+    <div class="footer-badges">
+      <span class="badge-item">&#128274; SSL Secure</span>
+      <span class="badge-item">&#10003; Verified Seller</span>
+    </div>
+  </div>
+</footer>
+
+<!-- MOBILE STICKY CTA -->
+<a href="#quote-form" class="mobile-cta">&#9889; Get a free quote now</a>
+
+<!-- CHAT BUBBLE
+<div class="chat-bubble" title="Live chat" onclick="alert('Connect your live chat provider here')">&#128172;</div>
+-->
+
+<script>
+  // ── CONFIG ──────────────────────────────────────────────
+  const WEB3FORMS_KEY  = 'a9fd9f50-6918-4055-a515-1100331f51b0';
+  const GOOGLE_SHEET_URL = ''; // paste your Apps Script URL here when ready
+  // ────────────────────────────────────────────────────────
+
+  async function submitForm() {
+    const btn = document.querySelector('.submit-btn');
+
+    const firstName = document.getElementById('f-fname').value.trim();
+    const lastName  = document.getElementById('f-lname').value.trim();
+    const email     = document.getElementById('f-email').value.trim();
+    const phone     = document.getElementById('f-phone').value.trim();
+    const year      = document.getElementById('f-year').value;
+    const make      = document.getElementById('f-make').value;
+    const model     = document.getElementById('f-model').value.trim();
+    const part      = document.getElementById('f-part').value;
+
+    if (!year || !make || !model || !part) {
+      alert('Please fill in your vehicle details and select a part category.'); return;
+    }
+    if (!firstName || !lastName) {
+      alert('Please enter your full name.'); return;
+    }
+    if (!email || !email.includes('@')) {
+      alert('Please enter a valid email address.'); return;
+    }
+    if (!phone) {
+      alert('Please enter your phone number.'); return;
+    }
+
+    btn.disabled = true;
+    btn.innerHTML = 'Submitting...';
+
+    const data = {
+      year, make, model, part, firstName, lastName, email, phone,
+      urgency:   'Not specified',
+      vin:       document.getElementById('f-vin').value.trim(),
+      notes:     document.getElementById('f-notes').value.trim(),
+      source:    'Not specified',
+      timestamp: new Date().toLocaleString('en-US', { timeZone: 'America/New_York' })
+    };
+
+    let submitted = false;
+
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          access_key:         WEB3FORMS_KEY,
+          subject:            `New Lead: ${data.firstName} ${data.lastName} — ${data.part} for ${data.year} ${data.make} ${data.model}`,
+          from_name:          'PartiqAuto Leads',
+          name:               `${data.firstName} ${data.lastName}`,
+          email:              data.email,
+          phone:              data.phone,
+          vehicle:            `${data.year} ${data.make} ${data.model}`,
+          part_needed:        data.part,
+          vin_or_part_number: data.vin   || 'Not provided',
+          additional_notes:   data.notes || 'None',
+          submitted_at:       data.timestamp
+        })
+      });
+      const json = await res.json();
+      if (json.success) { submitted = true; }
+      else { console.error('Web3Forms rejected:', json); }
+    } catch(e) { console.error('Web3Forms error:', e); }
+
+    if (GOOGLE_SHEET_URL) {
+      try {
+        await fetch(GOOGLE_SHEET_URL, {
+          method: 'POST', mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        submitted = true;
+      } catch(e) { console.error('Google Sheets error:', e); }
+    }
+
+    btn.disabled = false;
+    btn.innerHTML = '&#9889; Get my free quote now';
+
+    if (submitted) {
+      document.getElementById('form-fields').style.display = 'none';
+      document.getElementById('form-success').style.display = 'block';
+    } else {
+      alert('There was an issue submitting. Please try again or contact us directly.');
+    }
+  }
+
+  // Counter animation
+  function animateCounters() {
+    document.querySelectorAll('[data-target]').forEach(el => {
+      const target = parseInt(el.dataset.target);
+      const start  = performance.now();
+      const dur    = 1800;
+      function tick(now) {
+        const p   = Math.min((now - start) / dur, 1);
+        const val = Math.floor((1 - Math.pow(1 - p, 3)) * target);
+        el.textContent = val >= 1000000 ? (val/1000000).toFixed(1)+'M+' : val >= 1000 ? (val/1000).toFixed(0)+'K+' : val;
+        if (p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    });
+  }
+
+  const heroLeft = document.querySelector('.hero-left');
+  new IntersectionObserver((e, o) => { if (e[0].isIntersecting) { animateCounters(); o.disconnect(); } }, { threshold: 0.3 }).observe(heroLeft);
+
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+  });
+</script>
+</body>
+</html>
